@@ -1,10 +1,12 @@
 from unittest import TestCase
 
+from solit import convert_board_to_array, determinate_minimum_number_of_marbles_at_the_end, Board
+
+
 # - = vide
 # X = trous
 # O = billes
 # from solitaire.solit import determinate_minimum_number_of_marbles_at_the_end
-from solit import determinate_minimum_number_of_marbles_at_the_end
 
 
 class Test(TestCase):
@@ -207,3 +209,80 @@ class Test(TestCase):
         XXX
         """
         self.assertEqual(1, determinate_minimum_number_of_marbles_at_the_end(position_lines))
+
+    def test_avec_priorite_gauche(self):
+        position_lines = """
+        OXOOOOX
+        """
+        self.assertEqual(1, determinate_minimum_number_of_marbles_at_the_end(position_lines))
+
+    def test_avec_priorite_droite(self):
+        position_lines = """
+        XOOOOXO
+        """
+        self.assertEqual(1, determinate_minimum_number_of_marbles_at_the_end(position_lines))
+
+    def test_avec_priorite_bas(self):
+        position_lines = """
+        X
+        O
+        O
+        O
+        O
+        X
+        O
+        """
+        self.assertEqual(1, determinate_minimum_number_of_marbles_at_the_end(position_lines))
+
+    def test_avec_priorite_haut(self):
+        position_lines = """
+        O
+        O
+        O
+        O
+        X
+        O
+        X
+        """
+        self.assertEqual(1, determinate_minimum_number_of_marbles_at_the_end(position_lines))
+
+    def test_avec_cas_complexe_4_x_4(self):
+        position_lines = """
+        XOOX
+        OXXX
+        OOXO
+        XOOO
+        """
+        self.assertEqual(1, determinate_minimum_number_of_marbles_at_the_end(position_lines))
+
+    def test_avec_vide(self):
+        position_lines = """
+        OOO--
+        --X--
+        --OOO
+        """
+        self.assertEqual(6, determinate_minimum_number_of_marbles_at_the_end(position_lines))
+
+    def test_avec_vide_un_mangeation(self):
+        position_lines = """
+        OOO--
+        --O--
+        --XOO
+        """
+        self.assertEqual(4, determinate_minimum_number_of_marbles_at_the_end(position_lines))
+
+    def test_cas_partiellement_complet_3x3(self):
+        position_lines = """
+        OOO
+        OXO
+        OOO
+        """
+        self.assertEqual(8, determinate_minimum_number_of_marbles_at_the_end(position_lines))
+
+    def test_priorite_mangeation(self):
+        position_lines = """
+            XOOX
+            XOOX
+            OXXX
+            """
+        self.assertEqual(2, determinate_minimum_number_of_marbles_at_the_end(position_lines))
